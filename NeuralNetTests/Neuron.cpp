@@ -1,7 +1,7 @@
 #include "Neuron.h"
 
 // parameter for gradient -> learning rate
-double Neuron::eta = 0.15;
+double Neuron::eta = 0.25;
 
 // momentum
 double Neuron::alpha = 0.5;
@@ -9,7 +9,7 @@ double Neuron::alpha = 0.5;
 Neuron::Neuron(size_t i, size_t amountOutputs) :
 	index(i) {
 	for(unsigned c = 0; c < amountOutputs; c++) {
-		connections.push_back(Connection{randomWeight()});
+		connections.push_back(Connection{randomWeight(0.0, 1.0)});
 	}
 }
 
@@ -47,17 +47,18 @@ void Neuron::feedForward(const activationFunctionFlag f, const Layer& prev) {
 
 void Neuron::updateWeights(Layer& prev) {
 	for(size_t n = 0; n < prev.size(); n++) {
-		double oldDeltaWeight = prev.at(n).connections.at(index).deltaWeight;
+		Neuron& neuron = prev[n];
+		double oldDeltaWeight = neuron.connections.at(index).deltaWeight;
 		double newDeltaWeight =
 			// Individual input, magnified by the gradient and train rate
 			eta
-			* prev.at(n).value
+			* neuron.value
 			* gradient
 			// Also add momentum = a fraction of the previous delta weight
 			+ alpha
 			* oldDeltaWeight;
-		prev.at(n).connections.at(index).deltaWeight = newDeltaWeight;
-		prev.at(n).connections.at(index).weight += newDeltaWeight;
+		neuron.connections.at(index).deltaWeight = newDeltaWeight;
+		neuron.connections.at(index).weight += newDeltaWeight;
 	}
 }
 
@@ -87,7 +88,7 @@ double Neuron::activationFunctionDerivative(const activationFunctionFlag f, doub
 
 	switch(f) {
 		case TANH: {
-			return 1 / (val * val);
+			return 1.0 - (val * val);
 		}
 		case RELU: {
 			if(val < 0) return 0;

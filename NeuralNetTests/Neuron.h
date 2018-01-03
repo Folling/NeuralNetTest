@@ -20,7 +20,7 @@ struct Neuron;
 inline double randomWeight(double lowerBound = 0.0, double upperBound = 1.0){
 	std::random_device rd; 
 	std::mt19937 gen(rd());
-	std::uniform_real_distribution<double> dis(0, 1);
+	std::uniform_real_distribution<double> dis(lowerBound, upperBound);
 	return dis(gen);
 }
 
@@ -28,13 +28,13 @@ struct Connection {
 	explicit Connection(double w) {
 		weight = w;
 	}
-	double weight;
+	double weight{};
 	double deltaWeight{};
 };
 
-typedef std::vector<size_t> Topology;
-typedef std::vector<Neuron> Layer;
-typedef std::vector<Connection> Connections;
+using Topology = std::vector<size_t>;
+using Layer = std::vector<Neuron>;
+using Connections = std::vector<Connection>;
 
 struct Neuron
 {

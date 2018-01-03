@@ -21,7 +21,7 @@ public:
 	void backProp(Values target);
 public:
 	std::vector<Layer> layers;
-	double error;
+	double error{};
 private:
 	Topology topology;	
 	activationFunctionFlag function;	
