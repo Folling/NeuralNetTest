@@ -1,12 +1,13 @@
 #include "TrainingData.h"
 
-TrainingData::TrainingData(const char* path):
+TrainingData::TrainingData(std::string path):
 	filepath(path)
 {
 
 	if (!exists(filepath)) {
-		std::cout << "File doesn't exist!\n";
+		std::cout << filepath <<  "doesn't exist!\n";
 		getchar();
+		return;
 	}
 
 	reader.open(filepath);
@@ -18,9 +19,10 @@ TrainingData::TrainingData(const char* path):
 
 TrainingData::~TrainingData()
 {
+	reader.close();
 }
 
-bool TrainingData::read_bracketed(Values& input, Values& targets) {
+bool TrainingData::readBracketed(Values& input, Values& targets) {
 	//		   FORMAT
 	//   INPUT       OUTPUT
 	// [1, 2, 3] => [5, 3, 7]
@@ -28,40 +30,40 @@ bool TrainingData::read_bracketed(Values& input, Values& targets) {
 	input.clear();
 	targets.clear();	
 	
-	
-	reader.setf(std::ios::skipws);
-	std::string line;
-	std::getline(reader, line);
+	reader.unsetf(std::ios::skipws);
+	std::string linePart;
+	std::getline(reader, linePart, ']');
 
-	std::stringstream ss{ line };
+	std::stringstream ss{ linePart };
 
-	char bracket;
-	char expens{};
 	double value;
-	std::string arrow;
 
-	ss >> bracket;
+	ss.ignore(1); // initial bracket [
 
-	while(expens != ']') {
-		ss >> value;
-		ss >> expens;
+	while(ss >> value) {
 		input.push_back(value);
+		ss.ignore(1);
 	}
+	ss.clear();
 
-	expens = '_';
-	ss >> bracket;
-	ss >> arrow;
-	ss >> bracket;
+	reader.ignore(3);
+	linePart.clear();
+	std::getline(reader, linePart, ']');
+	ss.str(linePart);
+	
 
-	while(expens != ']') {
-		ss >> value;
-		ss >> expens;
+	while(ss >> value) {
 		targets.push_back(value);
+		ss.ignore(1);
 	}
-
+	reader.ignore(1);
 	if (reader.eof()) {
-		reader.seekg(std::ios::beg);
+		reader.clear();
 		return false;
 	}
 	return true;
+}
+
+bool TrainingData::readPixels(Values& input, Values& targets) {
+	return false;
 }

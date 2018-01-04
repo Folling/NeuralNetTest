@@ -111,12 +111,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DataCreator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Net.cpp" />
     <ClCompile Include="Neuron.cpp" />
     <ClCompile Include="TrainingData.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DataCreator.h" />
     <ClInclude Include="helpers.h" />
     <ClInclude Include="Net.h" />
     <ClInclude Include="Neuron.h" />
@@ -124,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Test1.txt" />
+    <Text Include="Test2.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

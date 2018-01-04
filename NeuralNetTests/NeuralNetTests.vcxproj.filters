@@ -27,6 +27,9 @@
     <ClCompile Include="TrainingData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DataCreator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Net.h">
@@ -41,9 +44,15 @@
     <ClInclude Include="helpers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DataCreator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Test1.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="Test2.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>
