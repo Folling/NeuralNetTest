@@ -48,14 +48,14 @@ void Net::feedForward(Values input) {
 
 	for(size_t l = 1; l < layers.size(); l++) {
 		Layer& prev = layers.at(l-1);
-		for(size_t n = 0; n < layers[l].size() - 1; n++) {
+		for(size_t n = 0; n < layers.at(l).size() - 1; n++) {			
 			layers.at(l).at(n).feedForward(this->function, prev);
 		}
 	}
 }
 
 void Net::backProp(Values target) {
-
+	iterationCount++;
 	Layer& outputLayer = layers.back();
 
 	error = 0.0;

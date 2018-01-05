@@ -22,9 +22,10 @@ public:
 public:
 	std::vector<Layer> layers;
 	double error{};
-private:
-	Topology topology;	
-	activationFunctionFlag function;	
+public:
+	Topology topology;
+	activationFunctionFlag function;
 	double recentError{};
 	const double smoothingFactor{ 100.0 };
+	size_t iterationCount{};
 };

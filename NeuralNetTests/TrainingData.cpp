@@ -58,7 +58,9 @@ bool TrainingData::readBracketed(Values& input, Values& targets) {
 	}
 	reader.ignore(1);
 	if (reader.eof()) {
+		reader.seekg(reader.beg);
 		reader.clear();
+		reader.seekg(0, reader.beg);
 		return false;
 	}
 	return true;

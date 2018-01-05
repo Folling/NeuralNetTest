@@ -1,7 +1,7 @@
 #include "Neuron.h"
 
 // parameter for gradient -> learning rate
-double Neuron::eta = 0.25;
+double Neuron::eta = 0.01;
 
 // momentum
 double Neuron::alpha = 0.5;
