@@ -15,7 +15,7 @@ int main() {
 	TrainingData second{ resource + "Test2.txt" };
 	Values input;
 	Values targets;
-	for (int i = 0; i < 20; i++) {
+	for (int i = 0; i < 10; i++) {
 		while (true) {
 			if (!first.readBracketed(input, targets)) break;
 			net.feedForward(input);
@@ -27,14 +27,20 @@ int main() {
 	std::cout << net.error << '\n'; 
 	getchar();
 	cls();
-	while(true) {
-		if (!second.readBracketed(input, targets)) break;
+	auto& back = net.layers.back();
+	while (true) {
+		if (!second.readBracketed(input, targets)) break;		
 		net.feedForward(input);
-		double error = 
-			  net.layers.back().at(0).value - targets.at(0) 
-			+ net.layers.back().at(1).value - targets.at(1);
+		double error =
+			pow(back.at(0).value - targets.at(0),2)
+			+ pow(back.at(1).value - targets.at(1), 2);
 		error /= 2;
+		error = sqrt(error);
+		std::cout << "Input: " << input[0] << '+' << input[1] << '=' << input[2] << '\n';
+		std::cout << "Expected: " << targets[0] << '|' << targets[1] << '\n';
+		std::cout << "Got: " << back.at(0).value << '|' << back.at(1).value << '\n';
 		std::cout << "Error: " << error << '\n';
 		getchar();
+		cls();
 	}
 }

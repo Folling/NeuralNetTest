@@ -1,15 +1,15 @@
 #include "Neuron.h"
 
 // parameter for gradient -> learning rate
-double Neuron::eta = 0.01;
+double Neuron::eta = 0.02;
 
 // momentum
-double Neuron::alpha = 0.5;
+double Neuron::alpha = 0.3;
 
 Neuron::Neuron(size_t i, size_t amountOutputs) :
 	index(i) {
 	for(unsigned c = 0; c < amountOutputs; c++) {
-		connections.push_back(Connection{randomWeight(0.0, 1.0)});
+		connections.push_back(Connection{randomWeight(-.5, .5)});
 	}
 }
 
